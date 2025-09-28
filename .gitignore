@@ -37,8 +37,7 @@ logs/
 *.sqlite3
 
 # Keep the data directory but not the database files
-data/
-!data/.gitkeep
+# data/
 
 # IDE
 .vscode/
