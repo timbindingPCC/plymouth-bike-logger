@@ -18,7 +18,7 @@ jobs:
     
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
     
@@ -78,7 +78,7 @@ jobs:
       continue-on-error: true
     
     - name: Upload artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
         name: bike-data-${{ github.run_number }}
@@ -86,4 +86,4 @@ jobs:
           data/*.db
           logs/*.log
           reports/*.json
-        retention-days: 365
+        retention-days: 30
