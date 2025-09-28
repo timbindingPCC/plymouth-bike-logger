@@ -15,6 +15,8 @@ on:
 jobs:
   collect:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     
     steps:
     - name: Checkout repository
@@ -73,9 +75,31 @@ jobs:
     
     - name: Commit and push data
       run: |
+        echo "=== Debug Information ==="
+        echo "Current directory: $(pwd)"
+        echo "Directory contents:"
+        ls -la
+        echo "Data directory contents:"
+        ls -la data/ || echo "Data directory doesn't exist"
+        echo "Git status before add:"
+        git status
+        
+        git config user.name "GitHub Actions Bot"
+        git config user.email "actions@github.com"
         git add -A
-        git diff --staged --quiet || (git commit -m "Data update: $(date '+%Y-%m-%d %H:%M:%S')" && git push)
-      continue-on-error: true
+        
+        echo "Git status after add:"
+        git status
+        
+        if git diff --staged --quiet; then
+          echo "No changes to commit"
+        else
+          echo "Committing changes..."
+          git commit -m "Data update: $(date '+%Y-%m-%d %H:%M:%S')"
+          echo "Pushing to branch: ${{ github.ref_name }}"
+          git push origin HEAD:${{ github.ref_name }}
+          echo "Push complete"
+        fi
     
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
