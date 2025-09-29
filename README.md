@@ -29,6 +29,8 @@ plymouth-bike-logger/
 ├── .github/
 │   └── workflows/
 │       └── data_collection.yml  # GitHub Actions workflow
+├── data/
+│   ├── database.db         # database 
 ├── requirements.txt
 ├── .env.example
 ├── .gitignore
